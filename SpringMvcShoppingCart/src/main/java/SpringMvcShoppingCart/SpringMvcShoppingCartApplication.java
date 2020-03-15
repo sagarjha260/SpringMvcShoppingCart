@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 public class SpringMvcShoppingCartApplication {
 
 	public static void main(String[] args) {
-		System.out.println("IN");
+		System.out.println("IN Project ncklasjcl");
 		SpringApplication.run(SpringMvcShoppingCartApplication.class, args);
 		
 	}
