@@ -1,7 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%-- <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> --%>
- 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
  
 <!DOCTYPE html>
 <html>
@@ -23,22 +23,22 @@
  
  
  
-   <c:forEach items="${paginationProducts.list}" var="prodInfo">
+   <c:forEach items="${paginationProducts.getContent()}" var="prodInfo">
        <div class="product-preview-container">
            <ul>
-               <li><img class="product-image"
-                   src="${pageContext.request.contextPath}/productImage?code=${prodInfo.code}" /></li>
+               <li><img class="product-image" src="${pageContext.request.contextPath}/productImage?code=${prodInfo.code}" /></li>
                <li>Code: ${prodInfo.code}</li>
                <li>Name: ${prodInfo.name}</li>
                <li>Price: <fmt:formatNumber value="${prodInfo.price}" type="currency"/></li>
-               <li><a
-                   href="${pageContext.request.contextPath}/buyProduct?code=${prodInfo.code}">
-                       Buy Now</a></li>
+               <li> <a href="${pageContext.request.contextPath}/buyProduct?code=${prodInfo.code}">
+                       Buy Now
+                   </a>
+               </li>
                <!-- For Manager edit Product -->
                <security:authorize  access="hasRole('ROLE_MANAGER')">
                  <li><a style="color:red;"
                      href="${pageContext.request.contextPath}/product?code=${prodInfo.code}">
-                       Edit Product</a></li>
+                       Edit Product</a></li><i class="fa fa-edit" style="font-size:24px;color:blue"></i>	
                </security:authorize>
            </ul>
        </div>
@@ -47,7 +47,7 @@
    <br/>
   
  
-   <c:if test="${paginationProducts.totalPages > 1}">
+    <%-- <c:if test="${paginationProducts.totalPages > 1}">
        <div class="page-navigator">
           <c:forEach items="${paginationProducts.navigationPages}" var = "page">
               <c:if test="${page != -1 }">
@@ -59,8 +59,24 @@
           </c:forEach>
           
        </div>
-   </c:if>
+   </c:if> --%>
  
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
    <jsp:include page="_footer.jsp" />
  
 </body>

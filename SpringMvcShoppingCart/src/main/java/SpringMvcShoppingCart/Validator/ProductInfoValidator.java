@@ -9,14 +9,14 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
  
-// @Component: As a Bean.
+//@Component: As a Bean.
 @Component
 public class ProductInfoValidator implements Validator {
  
     @Autowired
     private ProductDAO productDAO;
  
-    // This Validator support ProductInfo class.
+    //This Validator support ProductInfo class.
     @Override
     public boolean supports(Class<?> clazz) {
         return clazz == ProductInfo.class;

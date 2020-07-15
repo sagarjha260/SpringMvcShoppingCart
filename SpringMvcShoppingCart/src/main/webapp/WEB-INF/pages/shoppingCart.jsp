@@ -1,13 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>--%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
  
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
  
-<title>Shopping Cart</title>
+<title>Shopping Cart</title><i class="fa fa-shopping-cart" style="font-size:24px;color:blue"></i>
  
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles.css">
  
@@ -23,8 +24,7 @@
  
    <c:if test="${empty cartForm or empty cartForm.cartLines}">
        <h2>There is no items in Cart</h2>
-       <a href="${pageContext.request.contextPath}/productList">Show
-           Product List</a>
+       <a href="${pageContext.request.contextPath}/productList">Show Product List</a>
    </c:if>
  
    <c:if test="${not empty cartForm and not empty cartForm.cartLines   }">
@@ -65,18 +65,34 @@
            </c:forEach>
            <div style="clear: both"></div>
            <input class="button-update-sc" type="submit" value="Update Quantity" />
-           <a class="navi-item"
-               href="${pageContext.request.contextPath}/shoppingCartCustomer">Enter
-               Customer Info</a>
-           <a class="navi-item"
-               href="${pageContext.request.contextPath}/productList">Continue
-               Buy</a>
+           <a class="navi-item" href="${pageContext.request.contextPath}/shoppingCartCustomer">Enter Customer Info</a>
+           <a class="navi-item" href="${pageContext.request.contextPath}/productList">Continue Buy</a>
        </form:form>
  
  
    </c:if>
  
- 
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
    <jsp:include page="_footer.jsp" />
  
 </body>

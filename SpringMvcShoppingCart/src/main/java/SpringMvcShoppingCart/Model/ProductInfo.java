@@ -6,6 +6,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 public class ProductInfo {
     private String code;
     private String name;
+    private String category;
     private double price;
  
     private boolean newProduct=false;
@@ -20,14 +21,15 @@ public class ProductInfo {
         this.code = product.getCode();
         this.name = product.getName();
         this.price = product.getPrice();
+        this.category = product.getCategory();
     }
  
-    // Không thay đổi Constructor này,
-    // nó được sử dụng trong Hibernate query.
-    public ProductInfo(String code, String name, double price) {
+	//Do not change this constructor, It is used in Hibernate queries. 
+    public ProductInfo(String code, String name, String category, double price) {
         this.code = code;
         this.name = name;
         this.price = price;
+        this.category =category;
     }
  
     public String getCode() {
@@ -53,6 +55,14 @@ public class ProductInfo {
     public void setPrice(double price) {
         this.price = price;
     }
+    
+    public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
  
     public CommonsMultipartFile getFileData() {
         return fileData;

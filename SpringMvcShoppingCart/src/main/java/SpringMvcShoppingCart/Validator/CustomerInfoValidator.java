@@ -7,13 +7,14 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
  
-// @Component: As a Bean.
+//@Component: As a Bean.
 @Component
-public class CustomerInfoValidator implements Validator {
+public class CustomerInfoValidator implements Validator 
+{
  
     private EmailValidator emailValidator = EmailValidator.getInstance();
  
-    // This Validator support CustomerInfo class.
+    //This Validator support CustomerInfo class.
     @Override
     public boolean supports(Class<?> clazz) {
         return clazz == CustomerInfo.class;

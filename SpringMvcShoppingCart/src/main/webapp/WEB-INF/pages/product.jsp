@@ -52,6 +52,11 @@
                <td><form:errors path="price" class="error-message" /></td>
            </tr>
            <tr>
+               <td>Category *</td>
+               <td><form:input path="Category" /></td>
+               <td><form:errors path="Category" class="error-message" /></td>
+           </tr>
+           <tr>
                <td>Image</td>
                <td>
                <img src="${pageContext.request.contextPath}/productImage?code=${productForm.code}" width="100"/></td>
@@ -66,15 +71,29 @@
  
            <tr>
                <td>&nbsp;</td>
-               <td><input type="submit" value="Submit" /> <input type="reset"
-                   value="Reset" /></td>
+               <td><input type="submit" value="Submit" /> 
+               	   <input type="reset"  value="Reset" />
+               </td>
            </tr>
        </table>
    </form:form>
  
- 
- 
- 
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
    <jsp:include page="_footer.jsp" />
  
 </body>

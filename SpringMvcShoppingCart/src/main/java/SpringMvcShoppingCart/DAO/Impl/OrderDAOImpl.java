@@ -33,7 +33,8 @@ public class OrderDAOImpl implements OrderDAO {
     @Autowired
     private ProductDAO productDAO;
  
-    private int getMaxOrderNum() {
+    private int getMaxOrderNum() 
+    {
         String sql = "Select max(o.orderNum) from " + Order.class.getName() + " o ";
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery(sql);
@@ -82,13 +83,13 @@ public class OrderDAOImpl implements OrderDAO {
         }
  
         // Set OrderNum for report.
-        // Set OrderNum để thông báo cho người dùng.
         cartInfo.setOrderNum(orderNum);
     }
  
     // @page = 1, 2, ...
     @Override
-    public PaginationResult<OrderInfo> listOrderInfo(int page, int maxResult, int maxNavigationPage) {
+    public PaginationResult<OrderInfo> listOrderInfo(int page, int maxResult, int maxNavigationPage) 
+    {
         String sql = "Select new " + OrderInfo.class.getName()//
                 + "(ord.id, ord.orderDate, ord.orderNum, ord.amount, "
                 + " ord.customerName, ord.customerAddress, ord.customerEmail, ord.customerPhone) " + " from "
@@ -101,7 +102,23 @@ public class OrderDAOImpl implements OrderDAO {
         return new PaginationResult<OrderInfo>(query, page, maxResult, maxNavigationPage);
     }
  
-    public Order findOrder(String orderId) {
+    @Override
+    public OrderInfo getOrderInfo(String orderId) 
+    {
+        Order order = this.findOrder(orderId);
+        if (order == null) 
+        {
+            return null;
+        }
+        
+        return new OrderInfo(order.getId(), order.getOrderDate(), 
+        					 order.getOrderNum(), order.getAmount(), 
+        					 order.getCustomerName(), order.getCustomerAddress(), 
+        					 order.getCustomerEmail(), order.getCustomerPhone());
+    }
+    
+    public Order findOrder(String orderId) 
+    {
         Session session = sessionFactory.getCurrentSession();
         Criteria crit = session.createCriteria(Order.class);
         crit.add(Restrictions.eq("id", orderId));
@@ -109,18 +126,8 @@ public class OrderDAOImpl implements OrderDAO {
     }
  
     @Override
-    public OrderInfo getOrderInfo(String orderId) {
-        Order order = this.findOrder(orderId);
-        if (order == null) {
-            return null;
-        }
-        return new OrderInfo(order.getId(), order.getOrderDate(), //
-                order.getOrderNum(), order.getAmount(), order.getCustomerName(), //
-                order.getCustomerAddress(), order.getCustomerEmail(), order.getCustomerPhone());
-    }
- 
-    @Override
-    public List<OrderDetailInfo> listOrderDetailInfos(String orderId) {
+    public List<OrderDetailInfo> listOrderDetailInfos(String orderId) 
+    {
         String sql = "Select new " + OrderDetailInfo.class.getName() //
                 + "(d.id, d.product.code, d.product.name , d.quanity,d.price,d.amount) "//
                 + " from " + OrderDetail.class.getName() + " d "//

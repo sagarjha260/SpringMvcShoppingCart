@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
  
  
 <!DOCTYPE html>
@@ -19,8 +21,7 @@
  
 <div class="page-title">Enter Customer Information</div>
  
-   <form:form method="POST" modelAttribute="customerForm"
-       action="${pageContext.request.contextPath}/shoppingCartCustomer">
+   <form:form method="POST" modelAttribute="customerForm" action="${pageContext.request.contextPath}/shoppingCartCustomer">
  
        <table>
            <tr>
@@ -49,14 +50,30 @@
  
            <tr>
                <td>&nbsp;</td>
-               <td><input type="submit" value="Submit" /> <input type="reset"
-                   value="Reset" /></td>
+               <td><input type="submit" value="Submit" />
+                   <input type="reset" value="Reset" />
+               </td>
            </tr>
        </table>
  
    </form:form>
  
- 
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
    <jsp:include page="_footer.jsp" />
  
  

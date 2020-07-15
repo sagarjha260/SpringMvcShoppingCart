@@ -22,6 +22,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.hibernate.SessionFactory;
@@ -29,35 +30,46 @@ import org.hibernate.SessionFactory;
 @Configuration
 @ComponentScan("SpringMvcShoppingCart.*")
 @EnableTransactionManagement
-// Load to Environment.
-@PropertySource("classpath:application.properties")
-
-public class ApplicationContextConfig {
+@PropertySource("classpath:application.properties") //Spring @PropertySource annotation is used to provide properties file to Spring Environment. This annotation is used with @Configuration classes.
+                                                    //Spring PropertySource annotation is repeatable, means you can have multiple PropertySource on a Configuration class.
+													//like this @PropertySource("classpath:root.properties") below @PropertySource("classpath:application.properties")
+public class ApplicationContextConfig 
+{
  
-    // The Environment class serves as the property holder
-    // and stores all the properties loaded by the @PropertySource
+	/*
+	 * Environment is an interface representing the environment in which the current
+	 * application is running. It can be use to get profiles and properties of the
+	 * application environment. It serves as the property holder and stores all the
+	 * properties loaded by the @PropertySource
+	 */
     @Autowired
     private Environment env;
- 
+    
+	
+	/* This is used in validate() in CustomerInfoValidator class.Spring internally map its value like:
+	   ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.customerForm.name"); */
     @Bean
-    public ResourceBundleMessageSource messageSource() {
+    public ResourceBundleMessageSource messageSource() 
+    {
         ResourceBundleMessageSource rb = new ResourceBundleMessageSource();
-        // Load property in message/validator.properties
-        rb.setBasenames(new String[] { "messages/validator" });
+        rb.setBasenames(new String[] { "messages/validator" }); //Load property in message/validator.properties
+        
         return rb;
     }
  
     @Bean(name = "viewResolver")
-    public InternalResourceViewResolver getViewResolver() {
+    public InternalResourceViewResolver getViewResolver() 
+    {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setPrefix("/WEB-INF/pages/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
     }
      
-    // Config for Upload.
+    //Config for Upload.
     @Bean(name = "multipartResolver")
-    public CommonsMultipartResolver multipartResolver() {
+    public CommonsMultipartResolver multipartResolver() 
+    {
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
          
         // Set Max Size...
@@ -66,11 +78,13 @@ public class ApplicationContextConfig {
         return commonsMultipartResolver;
     }
  
+    /*datasource is being map with LocalSessionFactoryBean to create SessionFactory like: "factoryBean.setDataSource(dataSource);" 
+      ater SessionFactory is mapped with HibernateTransactionManager to maintain Transaction */
     @Bean(name = "dataSource")
-    public DataSource getDataSource() {
+    public DataSource getDataSource() 	
+    {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
- 
-        // See: ds-hibernate-cfg.properties
+
         dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
         dataSource.setUrl(env.getProperty("spring.datasource.url"));
         dataSource.setUsername(env.getProperty("spring.datasource.username"));
@@ -82,24 +96,22 @@ public class ApplicationContextConfig {
     }
  
     @Autowired
-    @Bean(name = "sessionFactory")
-    public SessionFactory getSessionFactory(DataSource dataSource) throws Exception {
+    @Bean(name = "entityManagerFactory")
+    public SessionFactory getSessionFactory(DataSource dataSource) throws Exception 
+    {
         Properties properties = new Properties();
  
-        // See: ds-hibernate-cfg.properties
         properties.put("spring.jpa.properties.hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect"));
         properties.put("spring.jpa.show-sql", env.getProperty("spring.jpa.show-sql"));
         properties.put("spring.jpa.properties.hibernate.current_session_context_class", env.getProperty("spring.jpa.properties.hibernate.current_session_context_class"));
-         
  
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
          
-        // Package contain entity classes
-        factoryBean.setPackagesToScan(new String[] { "SpringMvcShoppingCart.Entity" });
+        factoryBean.setPackagesToScan(new String[] { "SpringMvcShoppingCart.Entity" }); //Package contain entity classes
         factoryBean.setDataSource(dataSource);
         factoryBean.setHibernateProperties(properties);
         factoryBean.afterPropertiesSet();
-        //
+      
         SessionFactory sf = factoryBean.getObject();
         System.out.println("## getSessionFactory: " + sf);
         return sf;
@@ -107,14 +119,21 @@ public class ApplicationContextConfig {
  
     @Autowired
     @Bean(name = "transactionManager")
-    public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
+    public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) 
+    {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
- 
+        
         return transactionManager;
     }
+    
  
+	/*
+	 * Here below classes are not marked with @Component or @Controller or @Service etc.. that is why we are creating bean explicitly. 
+	 * If any other class implements the same interface then we will use this "@Bean(name = "accountDAO") " name in qualifier while Autowiring with @Autowired.
+	 */
     @Bean(name = "accountDAO")
-    public AccountDAO getApplicantDAO() {
+    public AccountDAO getApplicantDAO() 
+    {
         return new AccountDAOImpl();
     }
  

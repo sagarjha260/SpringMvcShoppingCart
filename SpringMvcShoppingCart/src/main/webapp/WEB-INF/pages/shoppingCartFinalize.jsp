@@ -15,13 +15,29 @@
  
    <jsp:include page="_menu.jsp" />
  
-   <div class="page-title">Finalize</div>
+   <div class="page-title">Order Placed</div>
   
    <div class="container">
-       <h3>Thank you for Order</h3>
+       <h3>Thank you, your order has been placed.</h3>
        Your order number is: ${lastOrderedCart.orderNum}
    </div>
  
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
    <jsp:include page="_footer.jsp" />
  
 </body>

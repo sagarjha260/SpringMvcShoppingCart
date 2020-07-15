@@ -115,7 +115,6 @@ public class CartInfo {
                 this.updateProduct(line.getProductInfo().getCode(), line.getQuantity());
             }
         }
- 
     }
  
 }

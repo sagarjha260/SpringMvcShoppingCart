@@ -1,0 +1,5 @@
+2020-04-09 00:37:27,987 INFO SpringMvcShoppingCart.Controller.AdminController [http-nio-8080-exec-6] Hi Users!!!
+2020-04-09 00:53:31,858 INFO SpringMvcShoppingCart.Controller.AdminController [http-nio-8080-exec-7] Hi Users!!!
+2020-04-09 00:54:38,762 INFO SpringMvcShoppingCart.Controller.AdminController [http-nio-8080-exec-6] Hi Users!!!
+2020-04-09 00:55:46,368 INFO SpringMvcShoppingCart.Controller.AdminController [http-nio-8080-exec-2] Hi Users!!!
+2020-04-09 00:55:54,060 INFO SpringMvcShoppingCart.Controller.AdminController [http-nio-8080-exec-6] Hi Users!!!

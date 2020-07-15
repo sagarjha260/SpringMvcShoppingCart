@@ -15,33 +15,49 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  
 @Configuration
 @EnableWebMvc
-public class WebMvcConfig extends WebMvcConfigurerAdapter {
- 
+public class WebMvcConfig extends WebMvcConfigurerAdapter 
+{ 
     private static final Charset UTF8 = Charset.forName("UTF-8");
  
-    // Config UTF-8 Encoding.
+	/*
+	 * Use for reading or writing to the body of the request or response. 
+	 * If no converters are added, default list of converters is registered.
+	 */ 
+    //Config UTF-8 Encoding.
     @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) 
+    {
         StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
         stringConverter.setSupportedMediaTypes(Arrays.asList(new MediaType("text", "plain", UTF8)));
         converters.add(stringConverter);
  
         // Add other converters ...
     }
- 
-    // Static Resource Config
-    // equivalents for <mvc:resources/> tags
+    
+	/*
+	 * Add handlers to serve static resources such as images, js, and, cssfiles from
+	 * specific locations under web application root, the classpath,and others.
+	 */    
+    //Static Resource Config equivalents for <mvc:resources/> tags
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(31556926);
+    public void addResourceHandlers(ResourceHandlerRegistry registry) 
+    {
+    	//This cache period is to store resource for that period and if request hit with in same period then resource will be fetched from cache. 
+    	registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(31556926); 
         registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(31556926);
         registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(31556926);
     }
  
-    // equivalent for <mvc:default-servlet-handler/> tag
+	/*
+	 * Configure a handler to delegate unhandled requests by forwarding to
+	 * theServlet container's "default" servlet. A common use case for this is
+	 * whenthe DispatcherServlet is mapped to "/" thus overriding theServlet
+	 * container's default handling of static resources.
+	 */    
+    //equivalent for <mvc:default-servlet-handler/> tag
     @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) 
+    {
         configurer.enable();
     }
- 
 }

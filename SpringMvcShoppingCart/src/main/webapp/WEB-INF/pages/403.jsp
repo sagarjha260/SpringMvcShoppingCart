@@ -19,8 +19,24 @@
    <div class="page-title">Access Denied!</div>
   
    <h3 style="color:red;">Sorry, you can not access this page!</h3>
-  
-  
+   
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+
    <jsp:include page="_footer.jsp" />
  
 </body>

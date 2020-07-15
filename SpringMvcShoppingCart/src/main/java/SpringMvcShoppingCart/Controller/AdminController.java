@@ -28,14 +28,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
  
+@Slf4j
 @Controller
-// Enable Hibernate Transaction.
-@Transactional
-// Need to use RedirectAttributes
-@EnableWebMvc
-public class AdminController {
- 
+@Transactional  // Enable Hibernate Transaction.
+@EnableWebMvc   // Need to use RedirectAttributes
+public class AdminController 
+{ 
+	Logger logger= LoggerFactory.getLogger("com.plantplaces");
+	
     @Autowired
     private OrderDAO orderDAO;
  
@@ -45,9 +51,9 @@ public class AdminController {
     @Autowired
     private ProductInfoValidator productInfoValidator;
  
-    // Configurated In ApplicationContextConfig.
+    
     @Autowired
-    private ResourceBundleMessageSource messageSource;
+    private ResourceBundleMessageSource messageSource; // Configurated In ApplicationContextConfig.
  
     @InitBinder
     public void myInitBinder(WebDataBinder dataBinder) {
@@ -66,51 +72,54 @@ public class AdminController {
  
     // GET: Show Login Page
     @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
-    public String login(Model model) {
-    	 System.out.println("in login");
-        return "login";
-       
+    public String login(Model model) 
+    {
+    	logger.info("Hi Users!!!");
+        return "login";  
     }
  
     @RequestMapping(value = { "/accountInfo" }, method = RequestMethod.GET)
-    public String accountInfo(Model model) {
- 
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(userDetails.getPassword());
-        System.out.println(userDetails.getUsername());
-        System.out.println(userDetails.isEnabled());
- 
+    public String accountInfo(Model model) 
+    {
+    	UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+   
         model.addAttribute("userDetails", userDetails);
         return "accountInfo";
     }
  
     @RequestMapping(value = { "/orderList" }, method = RequestMethod.GET)
-    public String orderList(Model model, //
-            @RequestParam(value = "page", defaultValue = "1") String pageStr) {
+    public String orderList(Model model, @RequestParam(value = "page", defaultValue = "1") String pageStr) 
+    {
         int page = 1;
-        try {
+        try 
+        {
             page = Integer.parseInt(pageStr);
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
+        	
         }
         final int MAX_RESULT = 5;
         final int MAX_NAVIGATION_PAGE = 10;
  
-        PaginationResult<OrderInfo> paginationResult //
-        = orderDAO.listOrderInfo(page, MAX_RESULT, MAX_NAVIGATION_PAGE);
+        PaginationResult<OrderInfo> paginationResult = orderDAO.listOrderInfo(page, MAX_RESULT, MAX_NAVIGATION_PAGE);
  
         model.addAttribute("paginationResult", paginationResult);
         return "orderList";
     }
  
-    // GET: Show product.
+    // GET: Show product. (Create product)
     @RequestMapping(value = { "/product" }, method = RequestMethod.GET)
-    public String product(Model model, @RequestParam(value = "code", defaultValue = "") String code) {
+    public String product(Model model, @RequestParam(value = "code", defaultValue = "") String code) 
+    {
         ProductInfo productInfo = null;
  
-        if (code != null && code.length() > 0) {
+        if (code != null && code.length() > 0) 
+        {
             productInfo = productDAO.findProductInfo(code);
         }
-        if (productInfo == null) {
+        if (productInfo == null) 
+        {
             productInfo = new ProductInfo();
             productInfo.setNewProduct(true);
         }
@@ -118,40 +127,41 @@ public class AdminController {
         return "product";
     }
  
-    // POST: Save product
+    // POST: Save product (On click Submit or reset while creating product)
     @RequestMapping(value = { "/product" }, method = RequestMethod.POST)
-    // Avoid UnexpectedRollbackException (See more explanations)
-    @Transactional(propagation = Propagation.NEVER)
-    public String productSave(Model model, //
-            @ModelAttribute("productForm") @Validated ProductInfo productInfo, //
-            BindingResult result, //
-            final RedirectAttributes redirectAttributes) {
- 
-        if (result.hasErrors()) {
+    @Transactional(propagation = Propagation.NEVER) // Avoid UnexpectedRollbackException (See more explanations)
+    public String productSave(Model model, @ModelAttribute("productForm") @Validated ProductInfo productInfo, BindingResult result, final RedirectAttributes redirectAttributes) 
+    {
+        if (result.hasErrors()) 
+        {
             return "product";
         }
-        try {
+        try 
+        {
             productDAO.save(productInfo);
-        } catch (Exception e) {
-            // Need: Propagation.NEVER?
-            String message = e.getMessage();
+        } 
+        catch (Exception e) 
+        {   
+            String message = e.getMessage(); // Need: Propagation.NEVER?
             model.addAttribute("message", message);
-            // Show product form.
-            return "product";
- 
+            
+            return "product"; // Show product form.
         }
-        return "redirect:/productList";
+        return "redirect:/productList"; //Return to the 1st page with created product on top
     }
  
-    @RequestMapping(value = { "/order" }, method = RequestMethod.GET)
-    public String orderView(Model model, @RequestParam("orderId") String orderId) {
+    @RequestMapping(value = { "/order" }, method = RequestMethod.GET)  // View product from Ordered List
+    public String orderView(Model model, @RequestParam("orderId") String orderId) 
+    {
         OrderInfo orderInfo = null;
-        if (orderId != null) {
+        if (orderId != null) 
+        {
             orderInfo = this.orderDAO.getOrderInfo(orderId);
         }
         if (orderInfo == null) {
             return "redirect:/orderList";
         }
+        
         List<OrderDetailInfo> details = this.orderDAO.listOrderDetailInfos(orderId);
         orderInfo.setDetails(details);
  

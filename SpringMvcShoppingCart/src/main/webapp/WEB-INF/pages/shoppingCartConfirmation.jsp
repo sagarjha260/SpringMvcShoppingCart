@@ -33,49 +33,43 @@
       <h3>Cart Summary:</h3>
       <ul>
           <li>Quantity: ${myCart.quantityTotal}</li>
-          <li>Total:
-          <span class="total">
+          <li>Total: <span class="total">
             <fmt:formatNumber value="${myCart.amountTotal}" type="currency"/>
           </span></li>
       </ul>
   </div>
  
-  <form method="POST"
-      action="${pageContext.request.contextPath}/shoppingCartConfirmation">
+  <form method="POST" action="${pageContext.request.contextPath}/shoppingCartConfirmation">
  
       <!-- Edit Cart -->
-      <a class="navi-item"
-          href="${pageContext.request.contextPath}/shoppingCart">Edit Cart</a>
+      <a class="navi-item" href="${pageContext.request.contextPath}/shoppingCart">Edit Cart</a>
  
       <!-- Edit Customer Info -->
-      <a class="navi-item"
-          href="${pageContext.request.contextPath}/shoppingCartCustomer">Edit
-          Customer Info</a>
+      <a class="navi-item" href="${pageContext.request.contextPath}/shoppingCartCustomer">Edit Customer Info</a>
  
       <!-- Send/Save -->
-      <input type="submit" value="Send" class="button-send-sc" />
-  </form>
+      <input type="submit" value="Buy" class="button-send-sc" />
+  
+   </form>
  
   <div class="container">
  
       <c:forEach items="${myCart.cartLines}" var="cartLineInfo">
           <div class="product-preview-container">
               <ul>
-                  <li><img class="product-image"
-                      src="${pageContext.request.contextPath}/productImage?code=${cartLineInfo.productInfo.code}" /></li>
-                  <li>Code: ${cartLineInfo.productInfo.code} <input
-                      type="hidden" name="code" value="${cartLineInfo.productInfo.code}" />
+                  <li><img class="product-image" src="${pageContext.request.contextPath}/productImage?code=${cartLineInfo.productInfo.code}" /></li>
+                  <li>Code: ${cartLineInfo.productInfo.code} <input type="hidden" name="code" value="${cartLineInfo.productInfo.code}" />
                   </li>
                   <li>Name: ${cartLineInfo.productInfo.name}</li>
                   <li>Price: <span class="price">
-                     <fmt:formatNumber value="${cartLineInfo.productInfo.price}" type="currency"/>
-                  </span>
+                     			<fmt:formatNumber value="${cartLineInfo.productInfo.price}" type="currency"/>
+                  			 </span>
                   </li>
                   <li>Quantity: ${cartLineInfo.quantity}</li>
                   <li>Subtotal:
-                    <span class="subtotal">
-                       <fmt:formatNumber value="${cartLineInfo.amount}" type="currency"/>
-                    </span>
+                    			<span class="subtotal">
+                       				<fmt:formatNumber value="${cartLineInfo.amount}" type="currency"/>
+                    			</span>
                   </li>
               </ul>
           </div>
@@ -83,6 +77,22 @@
  
   </div>
  
+  <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
   <jsp:include page="_footer.jsp" />
  
 </body>

@@ -21,6 +21,7 @@ public class Product implements Serializable {
     private String name;
     private double price;
     private byte[] image;
+    private String category;
  
     // For sort.
     private Date createDate;
@@ -33,8 +34,8 @@ public class Product implements Serializable {
     public String getCode() {
         return code;
     }
- 
-    public void setCode(String code) {
+
+	public void setCode(String code) {
         this.code = code;
     }
  
@@ -75,5 +76,15 @@ public class Product implements Serializable {
     public void setImage(byte[] image) {
         this.image = image;
     }
- 
+
+    @Column(name = "Category",length = Integer.MAX_VALUE , nullable = false)
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+    
+   
 }
