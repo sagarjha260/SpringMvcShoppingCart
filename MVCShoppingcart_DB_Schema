@@ -1,0 +1,79 @@
+--Create table--
+----------------
+create table ACCOUNTS
+(
+  USER_NAME VARCHAR2(20 CHAR) not null,
+  ACTIVE    NUMBER(1) not null,
+  PASSWORD  VARCHAR2(20 CHAR) not null,
+  USER_ROLE VARCHAR2(20) not null,
+  NAME VARCHAR2(20 CHAR) not null,
+  PHONE    NUMBER(20) not null,
+  Email VARCHAR2(20 CHAR) not null
+) ; 
+alter table ACCOUNTS add primary key (USER_NAME) ;
+-----------------------------------------------------
+create table PRODUCTS
+(
+  CODE        VARCHAR2(20 CHAR) not null,
+  IMAGE       BLOB,
+  NAME        VARCHAR2(255 CHAR) not null,
+  PRICE       FLOAT not null,
+  CREATE_DATE DATE default sysdate not null,
+  CATEGORY        VARCHAR2(255 CHAR) not null
+) ;
+alter table PRODUCTS add primary key (CODE) ;
+----------------------------------------------------
+create table ORDERS
+(
+  ID               VARCHAR2(50 CHAR) not null,
+  AMOUNT           FLOAT not null,
+  CUSTOMER_ADDRESS VARCHAR2(255 CHAR) not null,
+  CUSTOMER_EMAIL   VARCHAR2(128 CHAR) not null,
+  CUSTOMER_NAME    VARCHAR2(255 CHAR) not null,
+  CUSTOMER_PHONE   VARCHAR2(128 CHAR) not null,
+  ORDER_DATE       TIMESTAMP(6) not null,
+  ORDER_NUM        NUMBER(10) not null
+) ;
+alter table ORDERS add primary key (ID) ;
+alter table ORDERS add constraint ORDER_UK unique (ORDER_NUM) ;
+----------------------------------------------------
+create table ORDER_DETAILS
+(
+  ID         VARCHAR2(50 CHAR) not null,
+  AMOUNT     FLOAT not null,
+  PRICE      FLOAT not null,
+  QUANITY    NUMBER(10) not null,
+  ORDER_ID   VARCHAR2(50 CHAR) not null,
+  PRODUCT_ID VARCHAR2(20 CHAR) not null
+) ;
+--  
+alter table ORDER_DETAILS add primary key (ID) ;
+alter table ORDER_DETAILS add constraint ORDER_DETAIL_ORD_FK foreign key (ORDER_ID) references ORDERS (ID);
+alter table ORDER_DETAILS add constraint ORDER_DETAIL_PROD_FK foreign key (PRODUCT_ID) references PRODUCTS (CODE);
+  
+------------------------------------------------------------------------------------------------------------------  
+insert into Accounts (USER_NAME, ACTIVE, PASSWORD, USER_ROLE, NAME, PHONE, Email)
+values ('Sagar', 1, 'sagar', 'EMPLOYEE', 'SAGAR JHA', 8888888888, 'sagarjha260@gmail.com');
+
+insert into Accounts (USER_NAME, ACTIVE, PASSWORD, USER_ROLE, NAME, PHONE, Email)
+values ('Jake', 1, '123', 'EMPLOYEE', 'Jake Pri', 8888888888, 'jakepri260@gmail.com');
+---------------------------------------------------------------------------------------------
+insert into Products (CODE, NAME, PRICE, CREATE_DATE, CATEGORY)
+values ('01', 'Goodnight Moon', 200, sysdate, 'Childrens Books');
+
+insert into Products (CODE, NAME, PRICE, CREATE_DATE, CATEGORY)
+values ('02', 'Humpty Dumpty', 300, sysdate, 'Childrens Books');
+
+insert into Products (CODE, NAME, PRICE, CREATE_DATE, CATEGORY)
+values ('5000', 'Core Java', 250, sysdate, 'Programing Books');
+
+insert into Products (CODE, NAME, PRICE, CREATE_DATE, CATEGORY)
+values ('1000', 'Asoka', 400, sysdate, 'Biographies');
+
+insert into Products (CODE, NAME, PRICE, CREATE_DATE, CATEGORY)
+values ('2000', 'The Glass Hotel', 300, sysdate, 'Literature');
+
+insert into Products (CODE, NAME, PRICE, CREATE_DATE, CATEGORY)
+values ('3000', 'Red Moon', 300, sysdate, 'Sci-Fi');
+ 
+Commit; 
